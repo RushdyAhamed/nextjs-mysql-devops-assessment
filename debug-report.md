@@ -25,3 +25,11 @@ Root cause - The repo is empty, we need to create a Next.js app structire to run
 How found - By monitoring the github actions deploy step output then check the package.json file
 Fix applied - Created a directory as "app" and added the sample header
 Result  - It passes the root layout validation step in github actions
+
+
+-----Issue 4
+Problem - DB port 3306 already in use in production in a compose file
+Root cause - Anothet container is using it
+How found - By running the docker-compose and find it in logs
+Fix applied - Removed the port section
+Result  - Passes the docker compose run
