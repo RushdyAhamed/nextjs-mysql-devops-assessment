@@ -1,0 +1,24 @@
+name: Deploy Next.js App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 54.251.28.241
+          username: root
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd nextjs-mysql-example || git clone YOUR_REPO_URL nextjs-mysql-example
+            cd nextjs-mysql-example
+            git pull origin main
+            docker compose down
+            docker compose up -d --build
