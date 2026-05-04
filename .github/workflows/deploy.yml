@@ -21,7 +21,7 @@ jobs:
 
             # Ensure Docker is available
             docker --version
-            docker compose version
+            docker-compose -- version
 
             # Clone if not exists
             if [ ! -d "nextjs-mysql-example" ]; then
@@ -35,5 +35,5 @@ jobs:
             git reset --hard origin/main
 
             # Rebuild containers
-            docker compose down
-            docker compose up -d --build --remove-orphans
+            docker-compose down
+            docker-compose up -d --build --remove-orphans
