@@ -17,8 +17,23 @@ jobs:
           username: root
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd nextjs-mysql-example || git clone YOUR_REPO_URL nextjs-mysql-example
+            set -e
+
+            # Ensure Docker is available
+            docker --version
+            docker compose version
+
+            # Clone if not exists
+            if [ ! -d "nextjs-mysql-example" ]; then
+              git clone https://github.com/RushdyAhamed/nextjs-mysql-devops-assessment.git nextjs-mysql-example
+            fi
+
             cd nextjs-mysql-example
-            git pull origin main
+
+            # Clean and sync repo
+            git fetch --all
+            git reset --hard origin/main
+
+            # Rebuild containers
             docker compose down
-            docker compose up -d --build
+            docker compose up -d --build --remove-orphans
